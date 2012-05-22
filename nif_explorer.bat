@@ -82,7 +82,10 @@ echo.
 if not "%block%" == "empty" (
 
 	if not "%property%" == "empty" (
-		if "%global_index%" == "0"
+		
+		if "%global_index%" == "0" (
+		
+		)
 	)
 		if not "%searchPath%" == "empty" (
 		
