@@ -11,6 +11,29 @@ Fork
 * git clone git://github.com/Aaron1178/nif_explorer.git
 * http://github.com/Aaron1178/nif_explorer
 
+Parameters
+----------
+
+There are two ways to use Nif Explorer.
+
+* 1. You use Nif Explorer to run a python file, that the user has created based off the template
+* 2. The user uses Nif Explorer to run via console commands. This includes setting the block, property, searchPath and resultPath
+
+The commands are as follows:
+
+* 1. nif_explorer.bat -file@mytestfile.py - this will run the user file based off the template file
+* 2. nif_explorer.bat -block@NiNode -property@None searchPath@test/my/folder/full/of/nifs -resultPath@test/my/test/results
+
+For command #2, all parameters are required, except for -resultPath
+
+So the parameters are as follows:
+
+* -file
+* -block
+* -property
+* -searchPath
+* -resultPath
+
 How it works?
 
 Nif Explorer uses Pyffi and python to interact with nif files and check their data.

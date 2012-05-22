@@ -84,7 +84,7 @@ if not "%block%" == "empty" (
 	if not "%property%" == "empty" (
 		
 		if "%global_index%" == "0" (
-		
+			python.exe explorer_console.py %block%
 		)
 	)
 		if not "%searchPath%" == "empty" (
