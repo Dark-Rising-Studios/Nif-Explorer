@@ -2,9 +2,7 @@ import os.path
 import os
 import shutil
 import time
-
 from pyffi.formats.nif import NifFormat
-from xmlrpc.client import DateTime
 
 class nif_explorer_base:
     """Base class for the Nif Explorer tool"""
@@ -36,10 +34,18 @@ class nif_explorer_base:
     def __init__(self):
         if not os.path.exists(self.search_path):
             print("Cannot find search folder %s" % self.search_path);
+            return
+
+        if self.result_path == None:
+            if not os.path.exists("nif_explorer-results"):
+                print("No result path specified, creating default now!");
+                os.mkdir("nif_explorer-results")
+            self.result_path = "nif_explorer-results"
 
         if not os.path.exists(self.result_path):
-            print("Cannot find folder %s, creating it now!" % self.result_path);
+            print("Result path %s now found, creating it now!" % self.result_path);
             os.mkdir(self.result_path)
+
             
         elif os.path.exists(self.search_path):
             print("Found %s, cleaning directory!" % self.result_path)
@@ -73,6 +79,7 @@ class nif_explorer_base:
                                 else:
                                     print("Warning: No property %s found in %s" % (self.property, stream.name.replace("\\","/")))
                             else:  
+                                print("Found instance in %s" % stream.name.replace("\\","/"))
                                 self.files.append(stream.name.replace("\\","/"))
                 self.fIndex += 1
             except Exception:
