@@ -13,7 +13,11 @@ goto end
 
 goto runpython
 
+
 :runpython
+
+echo. 
 python.exe %1
+echo. 
 
 :end
