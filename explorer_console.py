@@ -10,6 +10,7 @@ class test_ninodes(nif_explorer_base):
     instance =  getattr(NifFormat, sys.argv[1]) if (len(sys.argv) >= 2) else None
     property = None
     bsa = None
+    print(sys.argv)
     if len(sys.argv) >= 4:
         if sys.argv[3] == "None":
             search_path = None

@@ -175,11 +175,10 @@ class nif_explorer_base:
                     if self.property != None:
                         if getattr(block, self.property):
                             print("Notice: %s found in %s" % (self.property, f.split("/")[-1]))
-                            self.files.append(stream.name.replace("\\","/"))
                         else:
                             print("Warning: No property %s found in %s" % (self.property, f.split("/")[-1]))
                             break
-                    streams = open(self.result_path + f, "wb")
+                    streams = open(self.result_path + "/" + f, "wb")
                     ndata.write(streams)
                     print("Notice: Written to %s" % (f))
                     streams.close()

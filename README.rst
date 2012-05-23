@@ -50,6 +50,6 @@ You don't have to, it's just another tool to make life easier.
 Bugs
 -------------
 *    If %python_path% inside buildenv is not set, the tests will not work
-
+*    The -bsa path MUST have a following / on the end. e.g C:/Users/Bobb/Desktop/bsa/ 
 Bugs - Fixed
 *    If the result_path is inside search_path and you run the test again, it will check all the nif files in result_path directory as well, so it's best to keep them as two separate directories.
