@@ -1,4 +1,10 @@
-The Nif Explorer is a tool used to explore multiple NIF files in a single directory for an indicated block.
+Nif Explorer is a tool that allows a user to quickly scan through a multiple .nif files, 
+looking for a certain block type or property. Nif Explorer can walk through a directory
+containing a lot of .nif files, search for the block or property of the block, then output
+its results a an user defined result path.
+
+Not only that, Nif Explorer as of version 0.1.0, Nif Explorer can search through BSA archives 
+searching for .nif files with the block or block property.
 
 Requirements
 ------------
@@ -14,42 +20,36 @@ Fork
 Parameters
 ----------
 
-There are two ways to use Nif Explorer.
-
-* 1. You use Nif Explorer to run a python file, that the user has created based off the template
-* 2. The user uses Nif Explorer to run via console commands. This includes setting the block, property, searchPath and resultPath
-
-The commands are as follows:
+Nif Explorer has two sets of parameters to use in buildenv. 
 
 * 1. nif_explorer.bat -file@mytestfile.py - this will run the user file based off the template file
-* 2. nif_explorer.bat -block@NiNode -property@None searchPath@test/my/folder/full/of/nifs -resultPath@test/my/test/results
+* 2. nif_explorer.bat -block@NiNode -property@None searchPath@None -bsa@None -resultPath@None
 
+Note* To execute #2 option, all parameters must be typed in that order for Nif Explorer to work.
+Note* Even though -searchPath and -bsa are set to None, one of them is required. 
+Note* -resultPath is not a required parameter. If it is not supplied, it will create a default results directory in the location buildenv is using Nif Explorer from.
 For command #2, all parameters are required, except for -resultPath
 
 So the parameters are as follows:
 
-* -file
-* -block
-* -property
-* -searchPath
-* -resultPath
+* -file - To load user defined searches from .py files
+* -block - A NifFormat block. e.g NiNode
+* -property - A property of -block. It must be a property or an error will occur
+* -searchPath - Moves Nif Explorer to load from a directory
+* -bsa - Moves Nif Explorer to load its .nifs from a .BSA archive
+* -resultPath - An optinal parameter. This sets the result path for Nif Explorer
 
 How it works?
 
-Nif Explorer uses Pyffi and python to interact with nif files and check their data.
-
-*    Opens all nif files in a selected folder
-*    Checks if the nif file has the indicated instance(NifFormat.NiNode for example)
-*    If so, it copies that nif file to the result_path folder.
+Nif Explorer uses Pyffi and Python 3.2 to interact with .nif and .bsa files and check their data.
 
 Why should we use it?
 
-You don't have to, it's just another tool to make life easier
+You don't have to, it's just another tool to make life easier.
 
 Bugs
 -------------
-
-There are two main bugs that I have found while testing.
-
-*    If the result_path is inside search_path and you run the test again, it will check all the nif files in result_path directory as well, so it's best to keep them as two separate directories.
 *    If %python_path% inside buildenv is not set, the tests will not work
+
+Bugs - Fixed
+*    If the result_path is inside search_path and you run the test again, it will check all the nif files in result_path directory as well, so it's best to keep them as two separate directories.

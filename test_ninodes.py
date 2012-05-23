@@ -6,10 +6,11 @@ from pyffi.formats.nif import NifFormat
 
 class test_ninodes(nif_explorer_base):
     search_path = "test/nif/base"
-    result_path = "test/nif/ninodes"
+    result_path = "test/nif/base/bob"
     instance = NifFormat.NiNode
-    property = "children"
-    
+    property = "collision_object"
+    bsa = None
+        
     def main(self):
         nif_explorer_base.__init__(self)
         nif_explorer_base.nif_explore(self)

@@ -14,6 +14,7 @@ goto helpcommands
 )
 
 set file=empty
+set bsa=empty
 set block=empty
 set property=empty
 set searchPath=empty
@@ -36,6 +37,12 @@ SHIFT
 goto checkparams
 )
 
+if "%SWITCH%" == "-bsa" (
+set bsa=%VALUE%
+SHIFT
+goto checkparams
+)
+
 if "%SWITCH%" == "-block" (
 set block=%VALUE%
 SHIFT
@@ -53,7 +60,6 @@ set searchPath=%VALUE%
 SHIFT
 goto checkparams
 )
-echo. %VALUE%
 if "%SWITCH%" == "-resultPath" (
 set resultPath=%VALUE%
 SHIFT
@@ -82,21 +88,21 @@ echo.
 if not "%block%" == "empty" (
 
 	if not "%property%" == "empty" (
-		
-		if "%global_index%" == "0" (
-			python.exe explorer_console.py %block%
-		)
-	)
+
 		if not "%searchPath%" == "empty" (
-		
-			if not "%resultPath%" == "empty" (
-				python.exe explorer_console.py %block% %property% %searchPath% %resultPath%
-				goto end
+			if not "%bsa%" == "empty" (
+				if not "%resultPath%" == "empty" (
+					python.exe explorer_console.py %block% %property% %searchPath% %bsa% %resultPath%
+					goto end
+				) else (
+					python.exe explorer_console.py %block% %property% %searchPath% %bsa%
+					goto end
+				)
 			) else (
 				python.exe explorer_console.py %block% %property% %searchPath%
+				
 				goto end
 			)
-			
 		) else (
 			python.exe explorer_console.py %block% %property%
 			goto end
