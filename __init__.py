@@ -44,6 +44,10 @@ class nif_explorer_base:
 
     """Here we run an initial check to see if paths exists, if not create them or errors"""
     def __init__(self):
+
+        self.result_path = self.result_path + "/%s" % (self.__name__)
+        self.result_path = self.result_path.replace("//", "/")
+
         if not self.search_path ==  None:
             if not os.path.exists(self.search_path) :
                 print("Cannot find search folder %s" % self.search_path);
@@ -92,7 +96,7 @@ class nif_explorer_base:
                                 else:
                                     print("Warning: No property %s found in %s" % (self.property, stream.name.replace("\\","/")))
                             else:  
-                                print("Found instance in %s" % stream.name.replace("\\","/"))
+                                print("Found block type: %s in %s" % (self.instance.__name__, stream.name.replace("\\","/")))
                                 self.files.append(stream.name.replace("\\","/"))
                 self.fIndex += 1
             except Exception:
@@ -101,10 +105,17 @@ class nif_explorer_base:
 
         for file in self.files:
             shutil.copy(file, self.result_path)
+
         if self.instance_count > 1:
             print("%s instance blocks in %s" % (self.instance_count, self.instance_cname))
+
+        if len(self.files) < 1: 
+            print("Found %s of block type: %s" % (len(self.files), self.instance.__name__))
+        else:
+            print("Found %s of block type: %s" % (len(self.files), self.instance.__name__))
+            print("Output folder %s" % self.result_path)
+
         print("Counted %s objects in %ss" % (self.index, time.time()-oldtime))
-        print("Output folder %s" % self.result_path)
 
     def getExtension(file):
         return file.split(".")[-1]
