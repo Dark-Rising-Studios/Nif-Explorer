@@ -15,5 +15,4 @@ class test_ninodes(nif_explorer_base):
         nif_explorer_base.__init__(self)
         nif_explorer_base.nif_explore(self)
         
-
 test_ninodes.main(test_ninodes)

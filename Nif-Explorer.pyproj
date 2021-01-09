@@ -4,9 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>1d4ab4c1-73d6-40ab-b41f-062866b2228d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>_init_.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <StartupFile>__init__.py</StartupFile>
+    <SearchPath>pyffi</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Nif-Explorer</Name>
@@ -16,6 +15,8 @@
     <TestFramework>pytest</TestFramework>
     <UnitTestPattern>test*.py</UnitTestPattern>
     <UnitTestRootDirectory>.</UnitTestRootDirectory>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +27,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="bsanif.py" />
     <Compile Include="explorer_console.py" />
     <Compile Include="tests\bsanif.py" />
     <Compile Include="test_ninodes.py" />
