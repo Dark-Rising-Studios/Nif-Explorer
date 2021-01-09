@@ -16,6 +16,9 @@
 #Python data
 __pycache__
 
+#Nif Explorer Tests
+tests/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
