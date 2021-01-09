@@ -3,6 +3,11 @@ import os
 import shutil
 import time
 import io
+import sys
+
+# Add the pyfii directory to the module search path(sys.path)
+sys.path.insert(1, os.path.join(os.path.dirname(os.path.abspath(__file__)), "pyffi"))
+
 from pyffi.formats.nif import NifFormat
 from pyffi.formats.bsa import BsaFormat
 

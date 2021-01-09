@@ -29,8 +29,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="explorer_console.py" />
-    <Compile Include="tests\bsanif.py" />
-    <Compile Include="tests\test_ninodes.py" />
+    <Compile Include="test_ninodes.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +41,7 @@
     <Folder Include="tests\nif\base\bob\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="nif_explorer.bat" />
     <Content Include="tests\bsa\test.bsa" />
     <Content Include="tests\nif\base\base_bhkcollision_box0.nif" />
     <Content Include="tests\nif\base\base_geometry0.nif" />

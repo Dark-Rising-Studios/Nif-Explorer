@@ -1,5 +1,7 @@
 import sys
+import os
 
+#import first, as __init__ sets the python module search path for pyffi
 from __init__ import nif_explorer_base
 
 from pyffi.formats.nif import NifFormat
