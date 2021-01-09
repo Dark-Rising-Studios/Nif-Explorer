@@ -5,10 +5,10 @@ from __init__ import nif_explorer_base
 from pyffi.formats.nif import NifFormat
 
 class test_ninodes(nif_explorer_base):
-    search_path = "test/nif/base"
-    result_path = "test/nif/base/bob"
+    search_path = "tests/nif/base"
+    result_path = "tests/test outputs/"
     instance = NifFormat.NiNode
-    property = "collision_object"
+    property = None
     bsa = None
         
     def main(self):
