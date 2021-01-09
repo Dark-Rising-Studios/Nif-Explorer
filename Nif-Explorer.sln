@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Nif-Explorer", "Nif-Explorer.pyproj", "{1D4AB4C1-73D6-40AB-B41F-062866B2228D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D4AB4C1-73D6-40AB-B41F-062866B2228D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4AB4C1-73D6-40AB-B41F-062866B2228D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9599A8F-4F36-40A4-A7B2-E4C79BFB64AB}
+	EndGlobalSection
+EndGlobal
