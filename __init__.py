@@ -49,9 +49,9 @@ class nif_explorer_base:
 
     """Here we run an initial check to see if paths exists, if not create them or errors"""
     def __init__(self):
-
         self.result_path = self.result_path + "/%s" % (self.__name__)
         self.result_path = self.result_path.replace("//", "/")
+        self.result_path += "/"
 
         if not self.search_path ==  None:
             if not os.path.exists(self.search_path) :
@@ -61,7 +61,7 @@ class nif_explorer_base:
         if not self.result_path ==  None:
             if not os.path.exists(self.result_path) :
                 print("Cannot find result path, creating now!");
-                os.mkdir(self.result_path)
+                os.makedirs(self.result_path)
 
         if self.result_path == None:
             if not os.path.exists("nif_explorer-results"):
@@ -74,11 +74,19 @@ class nif_explorer_base:
                 print("Found %s, cleaning directory!" % self.result_path)
                 fileList = [ f for f in os.listdir(self.result_path)]
                 for f in fileList:
-                    os.remove(self.result_path + "/%s" % f)
+                    os.remove(self.result_path + "%s" % f)
                           
     """This is the base method for searching nif files"""  
     def nif_explore(self):
-        oldtime = time.time() #Start the clock :)
+        oldtime = time.time() #Start the clock
+
+        if isinstance(self.instance, str):
+            self.instance = self.FindBlockTypeByName(self.instance)
+
+        if self.instance == None:
+            print("You must input a valid Block Type to search for!")
+            return 0
+
         """NifFormate.walkData searches the directory for files"""
         for stream, data in NifFormat.walkData(self.search_path):
             self.index += 1
@@ -130,7 +138,12 @@ class nif_explorer_base:
         nifExt = file.split(".")[-1]
         tmp = new + "_copy%s." % (indexn) + nifExt
         return tmp
-
+    
+    def FindBlockTypeByName(BlockTypeName):
+        for object in getattr(sys.modules["pyffi.formats.nif"], "NifFormat").__dict__.values():
+            if hasattr(object, "__name__"):
+                if object.__name__ == BlockTypeName:
+                    return object
         
     def bsa_explore(self):
         oldtime = time.time()
