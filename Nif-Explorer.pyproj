@@ -29,10 +29,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="explorer_console.py" />
+    <Compile Include="NifExplorer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="nifexplorerConsole.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pytest\test_nifexplorer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_ninodes.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="pytest\" />
+    <Folder Include="pytest\bsa\" />
+    <Folder Include="pytest\nif\" />
+    <Folder Include="pytest\nif\base\" />
+    <Folder Include="pytest\nif\base\bob\" />
     <Folder Include="tests\" />
     <Folder Include="tests\bsa\" />
     <Folder Include="tests\test outputs\" />
@@ -42,6 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="nif_explorer.bat" />
+    <Content Include="pytest\bsa\test.bsa" />
+    <Content Include="pytest\nif\base\base_bhkcollision_box0.nif" />
+    <Content Include="pytest\nif\base\base_geometry0.nif" />
+    <Content Include="pytest\nif\base\base_geometry2.nif" />
+    <Content Include="pytest\nif\base\base_geometry3.nif" />
+    <Content Include="pytest\nif\base\bob\base_bhkcollision_box0.nif" />
     <Content Include="tests\bsa\test.bsa" />
     <Content Include="tests\nif\base\base_bhkcollision_box0.nif" />
     <Content Include="tests\nif\base\base_geometry0.nif" />

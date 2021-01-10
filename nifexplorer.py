@@ -1,47 +1,18 @@
-from __init__ import nif_explorer_base
-
 from pyffi.formats.nif import NifFormat
 
-print("Nif Explorer Console")
-print("")
-print("Search all .nif files in a directory structure recursively looking for a specific blocktype.")
-print("")
+class NifExplorer():
+    """Utility class to scan .nif files searching for user-defined Block Types"""
 
-class nifexplorer(nif_explorer_base):
-    search_path = None
-    result_path = None
-    instance = None
-    property = None
-    bsa = None
-        
-    def main(self):
-        print("Please input a search path: ")
-        print("")
+    """The Blocktype that this instance is searching for"""
+    BlockType = None
 
-        self.search_path = input()
-        print("")
-        print("Search Path Set: %s" % self.search_path)
-        print("")
+    """The search path where the .nif files are located. Will scan through all sub-directories recursively"""
+    SearchPath = None
 
-        print("Please input a result path:")
-        print("")
-        self.result_path = input()
-        print("")
+    """The result path where the .nif files will be copied too. Result will be <ResultPath>/<BlockType>/"""
+    ResultPath = None
 
-        print("Result Path Set: %s" % self.result_path)
-        print("")
 
-        print("Please Input a Block Type to search for:")
-        print("")
-        self.instance = input()
-        print("")
 
-        print("")
-        print("Block Type Set: %s" % self.instance)
-        print("")
 
-        nif_explorer_base.__init__(self)
-        nif_explorer_base.nif_explore(self)
-        
-nifexplorer.main(nifexplorer)
 
