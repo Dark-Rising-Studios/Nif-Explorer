@@ -1,6 +1,5 @@
-from __init__ import nif_explorer_base
-
-from pyffi.formats.nif import NifFormat
+from NifExplorer import NifExplorer
+from NifExplorer import NifFormat
 
 print("Nif Explorer Console")
 print("")

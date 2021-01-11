@@ -89,13 +89,10 @@ class TestNifExplorer:
         assert len(setup_nifExplorer.SearchForProperty()) > 0
 
     def NifExplorer_Copy_All_Files_To_Results(self, setup_nifExplorer):
-        start = setup_nifExplorer.StartTimer()
         BlockTypeFiles = setup_nifExplorer.SearchForBlockType()
         PropertyFiles  = setup_nifExplorer.SearchForProperty()
 
         assert setup_nifExplorer.CopyFilesToResultPath(BlockTypeFiles,PropertyFiles)
-
-        print("Nif Explorer Processed %s files in %s seconds!" % (setup_nifExplorer.GetNifFileCount(BlockTypeFiles, PropertyFiles), setup_nifExplorer.EndTimer(start)))
 
     @pytest.mark.parametrize('funcs', [NifExplorer_Search_Nifs_For_BlockType, NifExplorer_Copy_All_Files_To_Results,NifExplorer_Search_Nifs_For_Property])
     def test_NifExplorer(self, setup_nifExplorer, funcs):
