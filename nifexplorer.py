@@ -48,6 +48,7 @@ class NifExplorer():
             self.SearchPath = self.MakeAbsolutePath(__file__, InSearchPath)
 
             if not os.path.exists(self.SearchPath):
+                print("Fake: %s" % self.SearchPath)
                 assert "NifExplorer.SetSearchPath(): Search Path does not exist!"
                 sys.exit()
 
@@ -66,7 +67,7 @@ class NifExplorer():
         elif self.MakeAbsolutePath(__file__, InResultPath) != None:
             ResultPath = self.MakeAbsolutePath(__file__, InResultPath)
 
-            ResultPath += ("\\" + self.BlockTypeToString(self.BlockType))
+            ResultPath += (os.sep + self.BlockTypeToString(self.BlockType))
 
             if not os.path.exists(ResultPath):
                 print("Could not find Result Path: '%s', Creating Now!" % ResultPath)
@@ -77,6 +78,30 @@ class NifExplorer():
         else:
             assert "NifExplorer.SetResultPath(): Cannot Resolve Result Path!"
    
+    """Get all nif files containing BlockType and return a list"""
+    def SearchForBlockType(self):
+        if (self.BlockType, self.ResultPath, self.SearchPath) == None:
+            assert "NifExplorer.SearchForBlockType() No Nif Explorer variables have been set yet. Please configure Nif Explorer first!"
+            sys.exit()
+
+        ListofNifs = []
+
+        for stream, data in NifFormat.walkData(self.SearchPath):            
+            try:
+                print("Reading %s" % stream.name.replace("\\","/"))
+                data.read(stream)
+                    
+                for root in data.roots:
+                    for block in root.tree():
+                        if isinstance(block, self.BlockType):
+                            ListofNifs.append(stream.name.replace("\\","/"))                
+
+            except Exception:
+                print("Warning: Read failed due to corrupt file, corrupt format description, or a bug!")
+
+
+        return ListofNifs
+
     """Start and return a timer"""
     def StartTimer():
         return time.time()
@@ -136,14 +161,24 @@ class NifExplorer():
     def MakeAbsolutePath(a,b):
         str = os.path.dirname(os.path.realpath(a))
 
-        if b[0] != ("/" or "\\"):
-           b = "\\" + b
-        
-        str += b
-        str.replace("/", "\\")
+        b = b.replace("\n", "\\n")
 
-        if str[len(str)-1] != "\\":
-            str += "\\"
+        if "\\" or "/" or r"\"" in b:
+            b = b.replace("\\", os.sep)
+
+            if os.sep == "\\":
+                b = b.replace("\n", "\\n")
+
+            if b[0] == "/":
+                split = b.split("/", 1)
+                b = split[1]
+            elif b[0] == "\\":
+                split = b.split("\\", 1)
+                b = split[1]
+
+        str = os.path.join(str, b)
+        str = str.replace("/", os.sep)
+        str = str.replace("\\", os.sep)
 
         if not os.path.isabs(str):
             assert "NifExplorer.MakeAbsolutePath(): Cou;d not make absolute path!"
