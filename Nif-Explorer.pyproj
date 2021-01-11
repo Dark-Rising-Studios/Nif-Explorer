@@ -5,7 +5,7 @@
     <ProjectGuid>1d4ab4c1-73d6-40ab-b41f-062866b2228d</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>__init__.py</StartupFile>
+    <StartupFile>Legacy\__init__.py</StartupFile>
     <SearchPath>pyffi</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -39,9 +39,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test_ninodes.py" />
-    <Compile Include="__init__.py" />
+    <Compile Include="Legacy\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Legacy\" />
     <Folder Include="pytest\" />
     <Folder Include="pytest\bsa\" />
     <Folder Include="pytest\nif\" />

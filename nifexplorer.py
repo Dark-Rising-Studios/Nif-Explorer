@@ -3,6 +3,10 @@ import sys
 import time
 import shutil
 
+# Add the pyfii directory to the module search path(sys.path)
+sys.path.insert(1, os.path.join(os.path.dirname(os.path.abspath(__file__)), "pyffi"))
+
+
 from pyffi.formats.nif import NifFormat
 
 class NifExplorer():
@@ -73,8 +77,7 @@ class NifExplorer():
             self.SearchPath = self.MakeAbsolutePath(__file__, InSearchPath)
 
             if not os.path.exists(self.SearchPath):
-                print("Fake: %s" % self.SearchPath)
-                assert "NifExplorer.SetSearchPath(): Search Path does not exist!"
+                print("NifExplorer.SetSearchPath(): Search Path does not exist! '%s' " % self.SearchPath)
                 sys.exit()
 
             if not self.DirectoryContainsNifRecursively(self.SearchPath):
@@ -92,8 +95,6 @@ class NifExplorer():
 
         elif self.MakeAbsolutePath(__file__, InResultPath) != None:
             ResultPath = self.MakeAbsolutePath(__file__, InResultPath)
-
-            ResultPath += (os.sep + self.BlockTypeToString(self.BlockType))
 
             if not os.path.exists(ResultPath):
                 print("Could not find Result Path: '%s', Creating Now!" % ResultPath)
@@ -121,7 +122,7 @@ class NifExplorer():
                 for root in data.roots:
                     for block in root.tree():
                         if isinstance(block, self.BlockType):
-                            ListofNifs.append(stream.name.replace("\\", "/"))                
+                            ListofNifs.append(stream.name.replace("\\", "/"))
 
             except Exception:
                 print("Warning: Read failed due to corrupt file, corrupt format description, or a bug!")
@@ -159,6 +160,7 @@ class NifExplorer():
 
     """Copy all search results to ResulT Path"""
     def CopyFilesToResultPath(self, BlockTypeFiles = None, PropertyFiles = None):
+
         if BlockTypeFiles != None:
             if len(BlockTypeFiles) > 0:
                 for file in BlockTypeFiles:
@@ -184,7 +186,23 @@ class NifExplorer():
         else:
             assert "NifExplorer.CopyFilesToResultPath(): Nothing to do!"
             return False
-        
+       
+    """Run Nif Explorer"""
+    def RunNifExplorer(self):
+        print("----------------- Starting Nif Explorer -----------------")
+  
+        start = self.StartTimer()
+
+        BlockTypes = self.SearchForBlockType()
+        Properties = self.SearchForProperty()
+
+        self.CopyFilesToResultPath(BlockTypes, Properties)
+
+        elapsed = self.EndTimer(start)
+
+        print("----------------- Counted %s .nifs in %ss -----------------" % (self.GetNifFileCount(BlockTypes, Properties), elapsed))  
+        print("-----------------Results Directory: %s -----------------" % self.ResultPath)
+
     """Start and return a timer"""
     def StartTimer(self):
         return time.time()
@@ -206,6 +224,18 @@ class NifExplorer():
                     return object
 
         return None
+
+    """Returns the count of .nif files found"""
+    def GetNifFileCount(self, BlockTypeFiles = None, PropertyFiles = None):
+        if (BlockTypeFiles == None) and (PropertyFiles == None):
+            return 0
+        else:
+            if BlockTypeFiles == None:
+                return len(PropertyFiles)
+            elif PropertyFiles == None:
+                return len(BlockTypeFiles)
+            else:
+                return len(BlockTypeFiles) + len(PropertyFiles) 
 
     """Searches for a directory recursively for .nif files"""
     @staticmethod
@@ -264,15 +294,3 @@ class NifExplorer():
 
         return str
 
-    """Returns the count of .nif files found"""
-    @staticmethod
-    def GetNifFileCount(self, BlockTypeFiles = None, PropertyFiles = None):
-        if BlockTypeFiles == None and PropertyFiles == None:
-            return 0
-        else:
-            if BlockTypeFiles == None:
-                return 0 + len(PropertyFiles)
-            elif PropertyFiles == None:
-                return 0 + len(BlockTypeFiles)
-            else:
-                return len(BlockTypeFiles) + len(PropertyFiles) 
