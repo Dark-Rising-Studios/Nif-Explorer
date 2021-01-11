@@ -17,8 +17,8 @@ def setup_nifExplorer():
 
     explorer = NifExplorer()
     explorer.SetBlockType(NifFormat.NiNode)
-    explorer.SetResultPath("\\pytest\\results")
-    explorer.SetSearchPath("\\pytest\\nif\\base")
+    explorer.SetResultPath("pytest/results")
+    explorer.SetSearchPath("pytest\nif\\base")
 
     explorer2 = NifExplorer()
     explorer2.SetBlockType(NifFormat.ATextureRenderData)
@@ -77,5 +77,16 @@ class TestNifExplorer:
     def test_NifExplorer_SearchPath_Contains_Nif_Files(self, setup_nifExplorer, funcs):
         for obj in setup_nifExplorer:
             funcs(self,obj)
+
+    def NifExplorer_Search_Nifs_For_BlockType(self, setup_nifExplorer):        
+        assert setup_nifExplorer.SearchForBlockType() != None or len(setup_nifExplorer.SearchForBlockType()) > 1
+
+    @pytest.mark.parametrize('funcs', [NifExplorer_Search_Nifs_For_BlockType])
+    def test_NifExplorer_Search_Nifs_For_Blocktype(self, setup_nifExplorer, funcs):
+        for obj in setup_nifExplorer:
+            funcs(self, obj)
+
+
+
 if __name__ == "__main__":
     pytest.main()
