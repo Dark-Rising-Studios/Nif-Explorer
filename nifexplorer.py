@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import shutil
 
 from pyffi.formats.nif import NifFormat
 
@@ -94,14 +95,31 @@ class NifExplorer():
                 for root in data.roots:
                     for block in root.tree():
                         if isinstance(block, self.BlockType):
-                            ListofNifs.append(stream.name.replace("\\","/"))                
+                            ListofNifs.append(stream.name.replace("\\", "/"))                
 
             except Exception:
                 print("Warning: Read failed due to corrupt file, corrupt format description, or a bug!")
 
-
         return ListofNifs
 
+    """Copy all search results to ResulT Path"""
+    def CopyFilesToResultPath(self, BlockTypeFiles = None, PropertyFiles = None):
+        if BlockTypeFiles != None and len(BlockTypeFiles) > 0:
+            for file in BlockTypeFiles:
+                try:
+                    shutil.copy(file, self.ResultPath)
+
+                except IOError as error:
+                    print("Cannot copy file: %s to Result Path: %s" % (file, error))
+
+
+            return True
+
+        elif PropertyFiles != None and len(PropertyFiles) > 0:
+            assert ""
+        else:
+            return True
+        
     """Start and return a timer"""
     def StartTimer():
         return time.time()

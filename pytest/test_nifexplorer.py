@@ -81,7 +81,14 @@ class TestNifExplorer:
     def NifExplorer_Search_Nifs_For_BlockType(self, setup_nifExplorer):        
         assert setup_nifExplorer.SearchForBlockType() != None or len(setup_nifExplorer.SearchForBlockType()) > 1
 
-    @pytest.mark.parametrize('funcs', [NifExplorer_Search_Nifs_For_BlockType])
+    def NifExplorer_Copy_All_Files_To_Results(self, setup_nifExplorer):
+        BlockTypeFiles = setup_nifExplorer.SearchForBlockType()
+
+        assert setup_nifExplorer.CopyFilesToResultPath(BlockTypeFiles)
+
+
+
+    @pytest.mark.parametrize('funcs', [NifExplorer_Search_Nifs_For_BlockType, NifExplorer_Copy_All_Files_To_Results])
     def test_NifExplorer_Search_Nifs_For_Blocktype(self, setup_nifExplorer, funcs):
         for obj in setup_nifExplorer:
             funcs(self, obj)
