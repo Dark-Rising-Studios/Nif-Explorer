@@ -52,8 +52,7 @@ class NifExplorer():
     """Set the Property"""
     def SetProperty(self, InProperty):        
         if InProperty == None:
-            assert "NifExplorer.SetProperty(): InProperty is None!"
-            sys.exit()
+            return
 
         if isinstance(InProperty, str):
             if len(InProperty) < 1:
@@ -204,8 +203,8 @@ class NifExplorer():
 
         elapsed = self.EndTimer(start)
 
-        print("----------------- Counted %s .nifs in %ss -----------------" % (self.GetNifFileCount(BlockTypes, Properties), elapsed))  
-        print("-----------------Results Directory: %s -----------------" % self.ResultPath)
+        print("----------------- Scanned %s .nifs in %ss -----------------" % (self.GetNifFileCount(BlockTypes, Properties), elapsed))  
+        print("----------------- Results Directory: %s -----------------" % self.ResultPath)
 
     """Start and return a timer"""
     def StartTimer(self):

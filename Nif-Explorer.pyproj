@@ -28,7 +28,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="explorer_console.py" />
     <Compile Include="NifExplorer.py">
       <SubType>Code</SubType>
     </Compile>
@@ -36,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="pytest\test_nifexplorer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="template_NifExplorer.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test_ninodes.py" />
@@ -56,7 +58,6 @@
     <Folder Include="tests\nif\base\bob\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="nif_explorer.bat" />
     <Content Include="pytest\bsa\test.bsa" />
     <Content Include="pytest\nif\base\base_bhkcollision_box0.nif" />
     <Content Include="pytest\nif\base\base_geometry0.nif" />
