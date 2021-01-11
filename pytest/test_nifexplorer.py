@@ -19,21 +19,23 @@ def setup_nifExplorer():
     explorer.SetBlockType(NifFormat.NiNode)
     explorer.SetResultPath("pytest/results")
     explorer.SetSearchPath("pytest\nif\\base")
+    explorer.SetProperty("name")
 
     explorer2 = NifExplorer()
-    explorer2.SetBlockType(NifFormat.ATextureRenderData)
+    explorer2.SetBlockType(NifFormat.bhkCollisionObject)
     explorer2.SetResultPath("\\pytest\\results")
     explorer2.SetSearchPath("\\pytest\\nif\\base")
+    explorer2.SetProperty("flags")
 
     explorer3 = NifExplorer()
     explorer3.SetBlockType("NiNode")
     explorer3.SetResultPath("\\pytest\\results")
     explorer3.SetSearchPath("\\pytest\\nif\\base")
+    explorer3.SetProperty("Rotation")
 
     Explorers.append(explorer)
     Explorers.append(explorer2)
     Explorers.append(explorer3)
-
 
     return Explorers   
 
@@ -79,21 +81,26 @@ class TestNifExplorer:
             funcs(self,obj)
 
     def NifExplorer_Search_Nifs_For_BlockType(self, setup_nifExplorer):        
-        assert setup_nifExplorer.SearchForBlockType() != None or len(setup_nifExplorer.SearchForBlockType()) > 1
+        assert setup_nifExplorer.SearchForBlockType() != None
+        assert len(setup_nifExplorer.SearchForBlockType()) > 0
+
+    def NifExplorer_Search_Nifs_For_Property(self, setup_nifExplorer):
+        assert setup_nifExplorer.SearchForProperty() != None 
+        assert len(setup_nifExplorer.SearchForProperty()) > 0
 
     def NifExplorer_Copy_All_Files_To_Results(self, setup_nifExplorer):
+        start = setup_nifExplorer.StartTimer()
         BlockTypeFiles = setup_nifExplorer.SearchForBlockType()
+        PropertyFiles  = setup_nifExplorer.SearchForProperty()
 
-        assert setup_nifExplorer.CopyFilesToResultPath(BlockTypeFiles)
+        assert setup_nifExplorer.CopyFilesToResultPath(BlockTypeFiles,PropertyFiles)
 
+        print("Nif Explorer Processed %s files in %s seconds!" % (setup_nifExplorer.GetNifFileCount(BlockTypeFiles, PropertyFiles), setup_nifExplorer.EndTimer(start)))
 
-
-    @pytest.mark.parametrize('funcs', [NifExplorer_Search_Nifs_For_BlockType, NifExplorer_Copy_All_Files_To_Results])
-    def test_NifExplorer_Search_Nifs_For_Blocktype(self, setup_nifExplorer, funcs):
+    @pytest.mark.parametrize('funcs', [NifExplorer_Search_Nifs_For_BlockType, NifExplorer_Copy_All_Files_To_Results,NifExplorer_Search_Nifs_For_Property])
+    def test_NifExplorer(self, setup_nifExplorer, funcs):
         for obj in setup_nifExplorer:
             funcs(self, obj)
-
-
 
 if __name__ == "__main__":
     pytest.main()

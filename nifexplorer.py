@@ -11,20 +11,24 @@ class NifExplorer():
     """The Blocktype that this instance is searching for"""
     BlockType = None
 
+    """The Property that this instance is searching for"""
+    Property = None
+
     """The search path where the .nif files are located. Will scan through all sub-directories recursively"""
     SearchPath = None
 
     """The result path where the .nif files will be copied too. Result will be <ResultPath>/<BlockType>/"""
     ResultPath = None
-
+   
     """Set the BlockType, will resolve down to a string, but a valid class can be passed. e.g: NifFormat.NiNode"""
     def SetBlockType(self, InBlockType):        
         if InBlockType == None:
             assert "NifExplorer.SetBlockType(): InBlockType is None!"
+            sys.exit()
 
         if isinstance(InBlockType, str):
             if self.FindBlockTypeByName(InBlockType) == None:
-                assert "NifExplorer.SetBlockType(): Cannot find BlockType! Exiting!"
+                assert "NifExplorer.SetBlockType(): Cannot find BlockType!"
                 sys.exit()
 
             else:
@@ -39,11 +43,31 @@ class NifExplorer():
 
             if self.BlockType == None:
                 assert("NifExplorer.SetBlockType(): Cannot Resolve BlockType!")
-        
+                sys.exit()
+    
+    """Set the Property"""
+    def SetProperty(self, InProperty):        
+        if InProperty == None:
+            assert "NifExplorer.SetProperty(): InProperty is None!"
+            sys.exit()
+
+        if isinstance(InProperty, str):
+            if len(InProperty) < 1:
+                assert "NifExplorer.SetProperty(): Cannot set Property!"
+                sys.exit()
+
+            else:
+                self.Property = InProperty.lower()
+
+        else: 
+            assert "NifExplorer.SetProperty(): InProperty must be a string!"
+            sys.exit()
+
     """Set the Search Path"""
     def SetSearchPath(self, InSearchPath):
         if not isinstance(InSearchPath, str):
             assert "NifExplorer.SetSearchPath(): InSearchPath must be a string!"
+            sys.exit()
 
         elif self.MakeAbsolutePath(__file__, InSearchPath) != None:
             self.SearchPath = self.MakeAbsolutePath(__file__, InSearchPath)
@@ -64,6 +88,7 @@ class NifExplorer():
     def SetResultPath(self, InResultPath):
         if not isinstance(InResultPath, str):
             assert "NifExplorer.SetSearchPath(): InResultPath must be a string!"
+            sys.exit()
 
         elif self.MakeAbsolutePath(__file__, InResultPath) != None:
             ResultPath = self.MakeAbsolutePath(__file__, InResultPath)
@@ -78,6 +103,7 @@ class NifExplorer():
 
         else:
             assert "NifExplorer.SetResultPath(): Cannot Resolve Result Path!"
+            sys.exit()
    
     """Get all nif files containing BlockType and return a list"""
     def SearchForBlockType(self):
@@ -102,9 +128,50 @@ class NifExplorer():
 
         return ListofNifs
 
+    """Get all nif files containing Property and return a list"""
+    def SearchForProperty(self):
+        if (self.BlockType and self.ResultPath and self.SearchPath) == None:
+            assert "NifExplorer.SearchForBlockType() No Nif Explorer variables have been set yet. Please configure Nif Explorer first!"
+            sys.exit()
+
+        elif self.Property == None:
+            return []
+
+        ListofNifs = []
+
+        for stream, data in NifFormat.walkData(self.SearchPath):            
+            try:
+                print("Reading Property from %s" % stream.name.replace("\\","/"))
+                data.read(stream)
+                    
+                for root in data.roots:
+                    for block in root.tree():
+                        if isinstance(block, self.BlockType):
+                            if getattr(block, self.Property):
+                                ListofNifs.append(stream.name.replace("\\", "/")) 
+                            else:
+                                assert "NifExplorer.SearchForProperty(): Property not found!"     
+            except Exception as e:
+                print("Warning: Read failed due to corrupt file, corrupt format description, or a bug! %s " %e)
+                return None
+
+        return ListofNifs
+
     """Copy all search results to ResulT Path"""
     def CopyFilesToResultPath(self, BlockTypeFiles = None, PropertyFiles = None):
-        if BlockTypeFiles != None and len(BlockTypeFiles) > 0:
+        if BlockTypeFiles != None:
+            if len(BlockTypeFiles) > 0:
+                for file in BlockTypeFiles:
+                    try:
+                        shutil.copy(file, self.ResultPath)
+
+                    except IOError as error:
+                        print("Cannot copy file: %s to Result Path: %s" % (file, error))
+
+                return True
+            return True
+
+        elif PropertyFiles != None and len(PropertyFiles) > 0:
             for file in BlockTypeFiles:
                 try:
                     shutil.copy(file, self.ResultPath)
@@ -112,25 +179,19 @@ class NifExplorer():
                 except IOError as error:
                     print("Cannot copy file: %s to Result Path: %s" % (file, error))
 
-
             return True
 
-        elif PropertyFiles != None and len(PropertyFiles) > 0:
-            assert ""
         else:
-            return True
+            assert "NifExplorer.CopyFilesToResultPath(): Nothing to do!"
+            return False
         
     """Start and return a timer"""
-    def StartTimer():
+    def StartTimer(self):
         return time.time()
 
     """Stops the timer and Returns the End Time"""
-    def EndTimer():
-        return time.time()
-
-    """Get Time Elapsed time"""
-    def GetTimeElapsed(start,end):
-        return end-start
+    def EndTimer(self, start):
+        return time.time() - start
 
     """Find a BlockType by Name via a string instance"""
     def FindBlockTypeByName(self, BlockTypeName):
@@ -202,3 +263,16 @@ class NifExplorer():
             assert "NifExplorer.MakeAbsolutePath(): Cou;d not make absolute path!"
 
         return str
+
+    """Returns the count of .nif files found"""
+    @staticmethod
+    def GetNifFileCount(self, BlockTypeFiles = None, PropertyFiles = None):
+        if BlockTypeFiles == None and PropertyFiles == None:
+            return 0
+        else:
+            if BlockTypeFiles == None:
+                return 0 + len(PropertyFiles)
+            elif PropertyFiles == None:
+                return 0 + len(BlockTypeFiles)
+            else:
+                return len(BlockTypeFiles) + len(PropertyFiles) 
