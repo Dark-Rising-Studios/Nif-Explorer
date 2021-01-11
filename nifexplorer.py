@@ -160,6 +160,10 @@ class NifExplorer():
 
     """Copy all search results to ResulT Path"""
     def CopyFilesToResultPath(self, BlockTypeFiles = None, PropertyFiles = None):
+        if self.BlockType != None:
+            self.ResultPath += (os.sep + str(self.BlockType).split("'")[1])
+            if not os.path.exists(self.ResultPath):
+                os.makedirs(self.ResultPath)
 
         if BlockTypeFiles != None:
             if len(BlockTypeFiles) > 0:
