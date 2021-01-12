@@ -2,14 +2,11 @@ import pytest
 import os
 import sys
 
-path = os.path.dirname(os.path.abspath(__file__))
-path = path.replace("\\pytest", "")
-sys.path.append(path)
-path += "\\pyffi"
-sys.path.append(path)
+sys.path.insert(1, os.path.join(os.path.dirname(os.path.abspath(__file__).replace("pytest","")), "pyffi"))
+sys.path.insert(1, os.path.dirname(os.path.abspath(__file__).replace("pytest","")))
 
 from NifExplorer import NifExplorer
-from NifExplorer import NifFormat
+from pyffi.formats.nif import NifFormat
 
 @pytest.fixture(autouse=True, scope='session')
 def setup_nifExplorer():

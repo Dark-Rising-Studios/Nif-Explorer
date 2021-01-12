@@ -9,7 +9,7 @@ sys.path.insert(1, os.path.join(os.path.dirname(os.path.abspath(__file__)), "pyf
 
 from pyffi.formats.nif import NifFormat
 
-class NifExplorer():
+class NifExplorer:
     """Utility class to scan .nif files searching for user-defined Block Types"""
 
     """The Blocktype that this instance is searching for"""
