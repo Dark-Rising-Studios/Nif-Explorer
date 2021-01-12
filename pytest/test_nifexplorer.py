@@ -58,13 +58,7 @@ class TestNifExplorer:
     def NifExplorer_SearchPath_Directory_Exists(self, setup_nifExplorer):
         assert os.path.exists(setup_nifExplorer.SearchPath) == True
 
-    def NifExplorer_SearchPath_Directory_Contains_No_Forward_Slashes(self, setup_nifExplorer):
-        assert setup_nifExplorer.SearchPath.count('/') < 1
-
-    def NifExplorer_ResultPath_Directory_Contains_No_Forward_Slashes(self, setup_nifExplorer):
-        assert setup_nifExplorer.ResultPath.count('/') < 1
-
-    @pytest.mark.parametrize('funcs', [NifExplorer_ResultPath_Directory_Exists, NifExplorer_SearchPath_Directory_Exists, NifExplorer_SearchPath_Directory_Contains_No_Forward_Slashes, NifExplorer_ResultPath_Directory_Contains_No_Forward_Slashes])
+    @pytest.mark.parametrize('funcs', [NifExplorer_ResultPath_Directory_Exists, NifExplorer_SearchPath_Directory_Exists])
     def test_NifExplorer_Directories_Exist_And_Paths_Contain_No_Forward_Slashes(self, setup_nifExplorer, funcs):
         for obj in setup_nifExplorer:
             funcs(self,obj)
