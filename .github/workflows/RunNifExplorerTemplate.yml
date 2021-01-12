@@ -41,16 +41,12 @@ jobs:
         with: 
           python-version: ${{ matrix.python-version }}
  
-      - name: Install PyTest 
-        run: pip install pytest
-        
       - name: Update Submodules recursively 
         run: git submodule update --init --recursive
       
-      - name: Run PyTests
+      - name: Run Nif Explorer
         run: python template_NifExplorer.py
-        
-        
+                
   Ubuntu:
 
     # The type of runner that the job will run on
@@ -76,17 +72,13 @@ jobs:
         with: 
           python-version: ${{ matrix.python-version }}
 
-      - name: Install PyTest 
-        run: pip install pytest
-
       - name: Update Submodules recursively 
         run: git submodule update --init --recursive
 
-      - name: Run PyTests
+      - name: Run Nif Explorer
         run: python template_NifExplorer.py
 
   Mac:
-
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -110,11 +102,8 @@ jobs:
         with: 
           python-version: ${{ matrix.python-version }}
 
-      - name: Install PyTest 
-        run: pip install pytest
-
       - name: Update Submodules recursively 
         run: git submodule update --init --recursive
 
-      - name: Run PyTests
+      - name: Run Nif Explorer
         run: python template_NifExplorer.py
