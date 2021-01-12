@@ -1,4 +1,4 @@
-![Run Nif Explorer](https://github.com/Aaron1178/Nif-Explorer/workflows/Run%20Nif%20Explorer/badge.svg) ![Nif Explorer Tests](https://github.com/Aaron1178/Nif-Explorer/workflows/Nif%20Explorer%20PyTests/badge.svg)
+![Run Nif Explorer](https://github.com/Dark-Rising-Studios/Nif-Explorer/workflows/Run%20Nif%20Explorer/badge.svg) ![Nif Explorer PyTests](https://github.com/Dark-Rising-Studios/Nif-Explorer/workflows/Nif%20Explorer%20PyTests/badge.svg)
 
 Nif Explorer is a tool that scans recursively through a specified directory, looking for .nif
 files containing certain Block Types or Properties of certain Block Types. The result will copy
